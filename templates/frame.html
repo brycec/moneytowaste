@@ -1,0 +1,51 @@
+<html>
+ <head>
+  <style>	
+	p { text-align: center; }
+	ul { list-style-type: none; position: relative; }
+	div.logout { position: absolute; right: 20px; }
+	div.header { text-align: center; padding: 20px; }
+	div.content { margin-left:auto; margin-right:auto; text-align: center; }
+	div.betlist { width: 350px; padding: 5px; margin-left:auto; margin-right:auto; margin-bottom: 40px; text-align: left; border-left: 1px solid #DDD; position: relative; }
+	div.betlist ul { margin-left: 0; padding-left: 0; padding: 5px; }
+	div.betlist li { padding: 5px; border-top: 1px solid #DDD;}
+	div.betlist li a { float: right; }
+	div.betlist ul li ul { font-size: .8em; }
+	div.section-header { border-left: 3px solid #DDD; padding: 3px; font-size: 1.2em; }
+	div.message { padding:20px; color: red; }
+	div.thin-box { width:500px; margin-left:auto; margin-right:auto; }
+	div.thin-box p { text-align: left; }
+	
+	.right { float: right; }
+  </style>
+ </head>
+  <body>	
+	{% if user %}
+	<div class="logout">
+	 <ul>
+	  <li>
+  	   <a href="/logout">logout</a>
+	  </li>
+	  <li>
+  	   <a href="/home">home</a>
+	  </li>
+	  <li>
+  	   <a href="/wtf">wtf is this?</a>
+	  </li>
+	 </ul>
+	</div>
+	<div class="header">
+		{% if message %}
+		<div class="message">
+			{{ message }}
+		</div>
+		{% endif %}
+  		hi this is "{{ current_page }}" - your wepay id is {{ user.wepay_id }}
+	</div>
+	{% endif %}
+   	 <div class="content">
+	  {{ content }}
+	 </div>
+	</div>
+  </body>
+</html>

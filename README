@@ -1,0 +1,3 @@
+This is an app for Google's App Engine. It allows users to bet against eachother with real money and let's the user choose how the bet is decided. Currently there is only random and arbiter. It uses wepay.com to set up two bi-directional checkouts attached to a Bet object. When the winner is decided, the loser's payment is captured and goes through and the winner's payment is cancelled.
+
+bryce@moneytowaste.appspot.com

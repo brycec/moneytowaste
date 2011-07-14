@@ -1,0 +1,14 @@
+application: moneytowaste
+version: 2
+runtime: python
+api_version: 1
+
+handlers:
+- url: /_ah/mail/.+
+  script: incoming_email.py
+  login: admin
+- url: .*
+  script: main.py
+
+inbound_services:
+- mail

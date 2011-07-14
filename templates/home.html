@@ -1,0 +1,75 @@
+
+{% if user.account_id %}
+	<p>balance: ${{ user.account.balance.available_balance }} (${{ user.account.balance.pending_balance }})<br>
+	<a href="{{ user.account.info.account_uri }}" target="_blank">wepay account</a></p>
+	<p><a href="/bet">make a bet</a></p>
+	{% if unsettled_as_user or unsettled_as_chump %}
+	<div class="betlist">
+		<div class="section-header">the arbiter is still deciding these bets:</div>
+		<ul>
+			{% for bet in unsettled_as_user %}
+				<li>
+					${{ bet.amount|floatformat:2 }} <span class="right">({{ bet.arbiter }})</span>
+					<ul><li><span class="right">against: {{ bet.chump.longname }} </span></li></ul>
+				</li>
+			{% endfor %}	
+			{% for bet in unsettled_as_chump %}
+				<li>
+					${{ bet.amount|floatformat:2 }} <span class="right">({{ bet.arbiter }})</span>
+					<ul><li><span class="right">against: {{ bet.user.longname }} </span></li></ul>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+	{% endif %}
+	{% if ready_bets %}
+	<div class="betlist">
+		<div class="section-header">you've got bets ready!!!!</div>
+		<ul>
+			{% for bet in ready_bets %}
+				<li>
+					${{ bet.amount|floatformat:2 }} <a href="/accept_bet?b={{ bet.key }}&amp;m=1">get lucky</a>
+					<ul><li>{% if bet.arbiter %}(arbiter: {{ bet.garbled_arbiter }}){% else %}random winner{% endif %}<span class="right">against: {{ bet.chump.shortname }}</span></li></ul>
+				</li>
+			{% endfor %}	
+		</ul>
+	</div>
+	{% endif %}
+	{% if waitingon_bets %}
+	<div class="betlist">
+		<div class="section-header">you're waiting on these bets to finish:</div>
+		<ul>
+			{% for bet in waitingon_bets %}
+				<li>
+					${{ bet.amount|floatformat:2 }} <a href="/cancel?b={{ bet.key }}">wuss out</a>
+					<ul><li>{% if bet.arbiter %}(arbiter: {{ bet.garbled_arbiter }}){% else %}random winner{% endif %}<span class="right">against: {{ bet.user.shortname }}</span></li></ul>
+				</li>
+			{% endfor %}	
+		</ul>
+	</div>
+	{% endif %}
+	<div class="betlist">
+		<div class="section-header">bets available to you:</div>
+		<ul>
+			{% for bet in avail_bets %}
+				<li>
+					${{ bet.amount|floatformat:2 }} <a href="/accept_bet?b={{ bet.key }}">game on</a>
+					<ul><li>{% if bet.arbiter %}(arbiter: {{ bet.garbled_arbiter }}){% else %}random winner{% endif %}<span class="right">against: {{ bet.user.shortname }}</span></li></ul>
+				</li>
+			{% endfor %}	
+		</ul>
+	</div>
+	<div class="betlist">
+		<div class="section-header">your open bets:</div>
+		<ul>
+			{% for bet in open_bets %}
+				<li>
+					${{ bet.amount|floatformat:2 }} <a href="/cancel?b={{ bet.key }}">forget it</a>
+					<ul><li>{% if bet.arbiter %}(arbiter: {{ bet.garbled_arbiter }}){% else %}random winner{% endif %}</li></ul>
+				</li>
+			{% endfor %}	
+		</ul>
+	</div>
+{% else %}
+	you don't have an account set up for here. <a href="/create_account">let's make one</a>.
+{% endif %}
