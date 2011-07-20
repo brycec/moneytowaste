@@ -1,5 +1,5 @@
 
-{% if user.account_id %}
+{% if user.account_id and user.account.info %}
 	<p>balance: ${{ user.account.balance.available_balance }} (${{ user.account.balance.pending_balance }})<br>
 	<a href="{{ user.account.info.account_uri }}" target="_blank">wepay account</a></p>
 	<p><a href="/bet">make a bet</a></p>
@@ -71,5 +71,5 @@
 		</ul>
 	</div>
 {% else %}
-	you don't have an account set up for here. <a href="/create_account">let's make one</a>.
+	you don't have a WePay account set up for here. <a href="/create_account">let's make one</a>.
 {% endif %}

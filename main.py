@@ -18,7 +18,7 @@ from django.utils import simplejson as json
 
 import strings
 
-ENVIRONMENT = "stage"
+ENVIRONMENT = "prod"
 
 if ENVIRONMENT == "stage":
     CLIENT_ID = '57417'
@@ -30,6 +30,11 @@ elif ENVIRONMENT == "vm":
     CLIENT_SECRET = '98f943401f'
     ACCESS_TOKEN = 'baaa941e1209ae33f5c8d67d867ce8800456fd156d3c2249e0dd3c705aed4be4'
     WEPAY = 'http://vm.wepay.com/v2'
+elif ENVIRONMENT == "prod":
+    CLIENT_ID = '122204'
+    CLIENT_SECRET = 'c66373c325'
+    ACCESS_TOKEN = '644b036a255dfd2851f4d7e4b2889dea34329ffea2a567fe82e19478afe71c75'
+    WEPAY = 'https://www.wepay.com/v2'
     
 APP_FEE = '0.10'
 CANCEL_STATES = ('new', 'authorized', 'reserved')
@@ -61,7 +66,7 @@ class WePay(object):
         if (response.status_code == 200):
             return json.loads(response.content)
         else:
-            logging.error("urlfetch blew up: " + response.content)
+            logging.error("urlfetch error: " + response.content)
             return None
 
 class User(db.Model):
@@ -322,14 +327,14 @@ class Home(Controller):
 class CreateAccount(Controller):
     def get(self):
         if self.init():
-            if self.user.account_id:
-                # we already have an account record for this user
-                # TODO: check if their account on record still exists with wepay and make a new one if it doesn't
+            if self.user.account_id and self.user.account['info']:
+                # we already have an account record for this user and it's still valid (account got set)
                 self.redirect('/home')
                 return
             params = {
                 'name'          : 'MONEYtoWASTE Winnings',
-                'description'   : 'all the money made from bets'
+                'description'   : 'all the money made from bets',
+                'image_uri'     : 'http://moneytowaste.appspot.com/s/img/mtw_logo.png'
             }
             result = self.wepay.call('account/create', params)
             if result:
@@ -414,7 +419,7 @@ class AcceptBet(Controller):
                 'type'              : "PERSONAL",
                 'amount'            : bet.amount,
                 'app_fee'           : APP_FEE,
-                'auto_capture'      : "false",
+                'auto_capture'      : 0,
                 'redirect_uri'      : self.request.host_url + "/callback",
                 'callback_uri'      : self.request.host_url + "/callback"
             }

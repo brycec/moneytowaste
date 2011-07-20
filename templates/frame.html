@@ -3,9 +3,10 @@
   <style>	
 	p { text-align: center; }
 	ul { list-style-type: none; position: relative; }
+	#thelogo { position: absolute; top: 10px; left: 10px; z-index: -2; }
 	div.logout { position: absolute; right: 20px; }
-	div.header { text-align: center; padding: 20px; }
-	div.content { margin-left:auto; margin-right:auto; text-align: center; }
+	div.header { text-align: center; padding: 20px; margin-left: auto; margin-right: auto; width: 400px; background-color: rgba(255,255,255,.9); }
+	div.content { margin-left: auto; margin-right: auto; text-align: center; position: relative; display: block; width: 400px; background-color: rgba(255,255,255,.9); }
 	div.betlist { width: 350px; padding: 5px; margin-left:auto; margin-right:auto; margin-bottom: 40px; text-align: left; border-left: 1px solid #DDD; position: relative; }
 	div.betlist ul { margin-left: 0; padding-left: 0; padding: 5px; }
 	div.betlist li { padding: 5px; border-top: 1px solid #DDD;}
@@ -19,7 +20,8 @@
 	.right { float: right; }
   </style>
  </head>
-  <body>	
+  <body>
+    <div id="thelogo"><img src="/s/img/mtw_logo.png" /></div>
 	{% if user %}
 	<div class="logout">
 	 <ul>

@@ -18,9 +18,15 @@ class LogSenderHandler(InboundMailHandler):
             sender      = mail_message.sender,
             to          = mail_message.to,
             date        = mail_message.date,
-            body        = mail_message.bodies('text/plain'),
-            original    = str(mail_message.original))
+            body        = str([body.decode() for type, body in mail_message.bodies('text/plain') ]),
+            original    = mail_message.original.as_string())
         email.put()
         logging.info("Received an email. " + str(mail_message.original))
         
-application = webapp.WSGIApplication([LogSenderHandler.mapping()], debug=True)
+application = webapp.WSGIApplication([LogSenderHandler.mapping()])
+
+def main():
+    run_wsgi_app(application)
+
+if __name__ == '__main__':
+    main()
