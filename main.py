@@ -21,19 +21,14 @@ import strings
 ENVIRONMENT = "prod"
 
 if ENVIRONMENT == "stage":
-    CLIENT_ID = '57417'
-    CLIENT_SECRET = '3436239931'
-    ACCESS_TOKEN = '2f726a0a9b9a4ec5770165e9c851b8388e146f437237b394f7dcbb086823e43d'
+    CLIENT_ID = ''
+    CLIENT_SECRET = ''
+    ACCESS_TOKEN = ''
     WEPAY = 'https://stage.wepay.com/v2'
-elif ENVIRONMENT == "vm":
-    CLIENT_ID = '3552'
-    CLIENT_SECRET = '98f943401f'
-    ACCESS_TOKEN = 'baaa941e1209ae33f5c8d67d867ce8800456fd156d3c2249e0dd3c705aed4be4'
-    WEPAY = 'http://vm.wepay.com/v2'
 elif ENVIRONMENT == "prod":
-    CLIENT_ID = '122204'
-    CLIENT_SECRET = 'c66373c325'
-    ACCESS_TOKEN = '644b036a255dfd2851f4d7e4b2889dea34329ffea2a567fe82e19478afe71c75'
+    CLIENT_ID = ''
+    CLIENT_SECRET = ''
+    ACCESS_TOKEN = ''
     WEPAY = 'https://www.wepay.com/v2'
     
 APP_FEE = '0.10'
